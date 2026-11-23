@@ -1,59 +1,32 @@
-# ExpenseWeb
+# expense-web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.3.0.
+Angular 22 front end for the **Expense Tracker** capstone. All business rules come from
+[`expense-core`](../core) (resolved via the `@expense/core` TypeScript path alias), so this
+repo must be checked out as the `web/` submodule of `expense-tracker`.
 
-## Development server
+## Scripts
 
-To start a local development server, run:
+| Command | What it does |
+|---------|--------------|
+| `npm start` | Dev server on http://localhost:4200 |
+| `npm test` | Unit/component tests (Angular unit-test builder + Vitest, jsdom) |
+| `npm run coverage` | Unit tests with coverage → `coverage/expense-web/` |
+| `npm run e2e` | Playwright E2E (starts the dev server automatically) |
+| `npm run e2e:ui` | Playwright UI mode for debugging |
+| `npm run build` | Production build → `dist/` |
 
-```bash
-ng serve
+## Structure
+
+```
+src/app/
+  data/            StorageService (localStorage) + ExpenseStore (signals)
+  expense-form/    add / edit form, shows core validation errors
+  expense-list/    presentational list with edit/delete outputs
+  filter-bar/      month + category filters
+  summary-panel/   total and per-category breakdown
+  budget-panel/    monthly budget and status
+src/testing/       shared test providers (in-memory storage, frozen clock)
+e2e/               Playwright specs, one per user story (US1–US7)
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Tests locate elements only via `data-testid`.
