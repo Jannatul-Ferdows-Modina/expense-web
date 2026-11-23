@@ -41,4 +41,16 @@ describe('App', () => {
     expect(store.expenses()).toEqual([]);
     expect(byTestId(el, 'submit-btn')!.textContent!.trim()).toBe('Add expense');
   });
+
+  it('stays in edit mode when a different expense is deleted', async () => {
+    const { fixture, el, store } = await setup();
+    store.add({ title: 'Bread', amount: 3, category: 'Food', date: '2026-11-11' });
+    await fixture.whenStable();
+    const rows = el.querySelectorAll<HTMLElement>('[data-testid="expense-row"]');
+    byTestId<HTMLButtonElement>(rows[1]!, 'edit-btn')!.click(); // Movie
+    await fixture.whenStable();
+    byTestId<HTMLButtonElement>(rows[0]!, 'delete-btn')!.click(); // Bread
+    await fixture.whenStable();
+    expect(byTestId(el, 'submit-btn')!.textContent!.trim()).toBe('Save changes');
+  });
 });

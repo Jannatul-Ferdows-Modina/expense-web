@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false",
     "test:watch": "ng test",
-    "coverage": "ng test --watch=false --coverage",
+    "coverage": "ng test --watch=false --coverage --coverage-include=\"src/app/**/*.ts\" --coverage-reporters=text --coverage-reporters=html --coverage-reporters=lcov --coverage-reporters=json-summary",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui"
   },

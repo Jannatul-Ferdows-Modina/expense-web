@@ -148,6 +148,11 @@ describe('ExpenseStore', () => {
     });
   });
 
+  it('uses the real current time when no clock is provided', () => {
+    const before = Date.now();
+    expect(TestBed.inject(CLOCK)().getTime()).toBeGreaterThanOrEqual(before);
+  });
+
   describe('persistence (AC7.1)', () => {
     it('saves expenses and budget, and restores them in a new store', () => {
       const store = createStore();
