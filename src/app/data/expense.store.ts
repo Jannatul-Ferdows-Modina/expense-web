@@ -36,7 +36,8 @@ export class ExpenseStore {
   private readonly storage = inject(StorageService);
   private readonly now = inject(CLOCK);
 
-  private readonly today = () => todayIso(this.now());
+  /** Today as YYYY-MM-DD according to the injected clock. */
+  readonly today = (): string => todayIso(this.now());
   readonly currentMonth = monthOf(this.today());
 
   readonly expenses = signal<Expense[]>(this.loadExpenses());

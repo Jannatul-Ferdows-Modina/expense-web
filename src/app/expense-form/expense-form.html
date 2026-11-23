@@ -1,0 +1,62 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h2>{{ editing() ? 'Edit expense' : 'New expense' }}</h2>
+
+  <div class="field field--wide">
+    <label for="title">Title</label>
+    <input id="title" data-testid="title-input" formControlName="title" placeholder="e.g. Groceries"
+      [attr.aria-invalid]="errors().title ? true : null" aria-describedby="title-error" />
+    @if (errors().title; as message) {
+      <p class="error" id="title-error" data-testid="error-title">{{ message }}</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="amount">Amount ($)</label>
+    <input id="amount" type="number" inputmode="decimal" step="0.01" min="0" data-testid="amount-input"
+      formControlName="amount" placeholder="0.00"
+      [attr.aria-invalid]="errors().amount ? true : null" aria-describedby="amount-error" />
+    @if (errors().amount; as message) {
+      <p class="error" id="amount-error" data-testid="error-amount">{{ message }}</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="category">Category</label>
+    <select id="category" data-testid="category-select" formControlName="category"
+      [attr.aria-invalid]="errors().category ? true : null">
+      @for (category of categories; track category) {
+        <option [value]="category">{{ category }}</option>
+      }
+    </select>
+    @if (errors().category; as message) {
+      <p class="error" data-testid="error-category">{{ message }}</p>
+    }
+  </div>
+
+  <div class="field">
+    <label for="date">Date</label>
+    <input id="date" type="date" data-testid="date-input" formControlName="date"
+      [attr.aria-invalid]="errors().date ? true : null" aria-describedby="date-error" />
+    @if (errors().date; as message) {
+      <p class="error" id="date-error" data-testid="error-date">{{ message }}</p>
+    }
+  </div>
+
+  <div class="field field--wide">
+    <label for="note">Note <span class="optional">(optional)</span></label>
+    <textarea id="note" rows="2" data-testid="note-input" formControlName="note"
+      [attr.aria-invalid]="errors().note ? true : null"></textarea>
+    @if (errors().note; as message) {
+      <p class="error" data-testid="error-note">{{ message }}</p>
+    }
+  </div>
+
+  <div class="actions">
+    <button type="submit" class="btn btn--primary" data-testid="submit-btn">
+      {{ editing() ? 'Save changes' : 'Add expense' }}
+    </button>
+    @if (editing()) {
+      <button type="button" class="btn" data-testid="cancel-edit-btn" (click)="cancel()">Cancel</button>
+    }
+  </div>
+</form>
